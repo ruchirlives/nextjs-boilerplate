@@ -1,12 +1,16 @@
 // app/cargo/page.server.tsx
 import React from 'react';
 import { fetchCargoRecords } from '../../utils/fetchCargoRecords';
+import { useServerInsertedHTML } from 'next/navigation';
 
-CargoPageServer() = () => {
-  const wikiUrl = 'https://digitaltransformation.miraheze.org';
-  const tableName = 'DigitalResource';
-  // Adjust the limit as needed
-  const records = await fetchCargoRecords(wikiUrl, tableName, 80);
+export default function CargoPageServer() {
+  const records = useServerInsertedHTML(async () => {
+    const wikiUrl = 'https://digitaltransformation.miraheze.org';
+    const tableName = 'DigitalResource';
+    // Adjust the limit as needed
+    const records = await fetchCargoRecords(wikiUrl, tableName, 80);
+    return records;
+  }, []);
 
   return (
     <div>
@@ -19,5 +23,3 @@ CargoPageServer() = () => {
     </div>
   );
 }
-
-export default CargoPageServer;
