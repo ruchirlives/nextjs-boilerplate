@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchCargoRecords } from '../utils/fetchCargoRecords';
+import { fetchCargoRecords } from './utils/fetchCargoRecords';
 
 interface CargoProps {
   records: { title: string }[];
