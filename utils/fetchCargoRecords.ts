@@ -29,7 +29,7 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
 
   try {
     const response = await fetch(`${apiUrl}?${params.toString()}`);
-    const jsonResponse: { cargoquery?: CargoQueryResponse['cargoquery'] } = await response.json();
+    const jsonResponse = await response.json();
 
     if (!jsonResponse.cargoquery) {
       console.error('No cargoquery data found in response');
