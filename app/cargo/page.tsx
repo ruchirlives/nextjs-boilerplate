@@ -6,7 +6,7 @@ const CargoPage = async () => {
 
       const wikiUrl = 'https://digitaltransformation.miraheze.org';
       const tableName = 'DigitalResource';
-      const record = await fetchCargoRecords(wikiUrl, tableName, 80);
+      const records = await fetchCargoRecords(wikiUrl, tableName, 80);
 
 
   return (
