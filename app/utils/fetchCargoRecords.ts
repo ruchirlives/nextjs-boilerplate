@@ -8,7 +8,7 @@ interface CargoRecord {
 interface ApiResponse {
   cargoquery: Array<{
     title: {
-      title: string; // Adjust this path based on the actual structure
+      title: string; // Adjust this path based on the actual structures.
     };
   }>;
 }
