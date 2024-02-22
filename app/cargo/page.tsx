@@ -2,11 +2,12 @@
 import React from 'react';
 import { fetchCargoRecords } from './fetchCargoRecords';
 
-export async function CargoPageServer() {
-  const wikiUrl = 'https://digitaltransformation.miraheze.org';
-  const tableName = 'DigitalResource';
-  // Adjust the limit as needed
-  const records = await fetchCargoRecords(wikiUrl, tableName, 80);
+const CargoPage = async () => {
+
+      const wikiUrl = 'https://digitaltransformation.miraheze.org';
+      const tableName = 'DigitalResource';
+      const records = await fetchCargoRecords(wikiUrl, tableName, 80);
+
 
   return (
     <div>
@@ -18,6 +19,6 @@ export async function CargoPageServer() {
       </ul>
     </div>
   );
-}
+};
 
-export default CargoPageServer;
+export default CargoPage;
