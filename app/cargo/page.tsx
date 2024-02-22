@@ -1,6 +1,6 @@
 // app/cargo/page.server.tsx
 import React from 'react';
-import { fetchCargoRecords } from '../../utils/fetchCargoRecords';
+import { fetchCargoRecords } from './fetchCargoRecords';
 
 export async function CargoPageServer() {
   const wikiUrl = 'https://digitaltransformation.miraheze.org';
