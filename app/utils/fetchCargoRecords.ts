@@ -4,11 +4,11 @@ interface CargoRecord {
   title: string;
 }
 
-// Define a type for the expected structure of the API response
-interface CargoQueryResponse {
-  cargoquery?: Array<{
+// Assuming the structure of your API response
+interface ApiResponse {
+  cargoquery: Array<{
     title: {
-      title: string; // Assuming 'title' is nested within each query item, adjust based on actual response
+      title: string; // Adjust this path based on the actual structure
     };
   }>;
 }
@@ -26,11 +26,11 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
 
   try {
     const response = await fetch(`${apiUrl}?${params.toString()}`);
-    const data: CargoQueryResponse = await response.json(); // Use the defined type here
+    const data = await response.json() as ApiResponse; // Type assertion here
 
     const records = data.cargoquery || [];
-    const simplifiedRecords: CargoRecord[] = records.map((record) => ({
-      title: record.title.title, // Adjust based on actual response structure
+    const simplifiedRecords: CargoRecord[] = records.map(record => ({
+      title: record.title.title,
     }));
 
     return simplifiedRecords;
@@ -39,4 +39,5 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
     return [];
   }
 }
+
 
