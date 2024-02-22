@@ -4,15 +4,6 @@ interface CargoRecord {
   title: string;
 }
 
-// Assuming the structure of your API response
-interface ApiResponse {
-  cargoquery: Array<{
-    title: {
-      title: string; // Adjust this path based on the actual structures.
-    };
-  }>;
-}
-
 export async function fetchCargoRecords(wikiUrl: string, table: string, limit: number = 10): Promise<CargoRecord[]> {
   const apiUrl = `${wikiUrl}/w/api.php`;
 
@@ -26,11 +17,11 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
 
   try {
     const response = await fetch(`${apiUrl}?${params.toString()}`);
-    const data = await response.json() as ApiResponse; // Type assertion here
+    const data = await response.json();
 
     const records = data.cargoquery || [];
-    const simplifiedRecords: CargoRecord[] = records.map(record => ({
-      title: record.title.title,
+    const simplifiedRecords: CargoRecord[] = records.map((record: any) => ({
+      title: record.title.title, // Adjust according to actual response structure
     }));
 
     return simplifiedRecords;
@@ -39,5 +30,3 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
     return [];
   }
 }
-
-
