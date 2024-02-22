@@ -1,19 +1,7 @@
-// If using CommonJS, you might need to adjust the import as per your setup, e.g.,
-// const fetch = require('node-fetch').default; for CommonJS environments
 import fetch from 'node-fetch';
 
 interface CargoRecord {
   title: string;
-  description?: string; // Assuming you might also want to extract the description
-}
-
-interface CargoQueryResponse {
-  cargoquery: Array<{
-    title: {
-      title: string;
-      Description?: string; // Ensure the field names match the API response
-    };
-  }>;
 }
 
 export async function fetchCargoRecords(wikiUrl: string, table: string, limit: number = 10): Promise<CargoRecord[]> {
@@ -24,21 +12,16 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
     tables: table,
     limit: limit.toString(),
     format: 'json',
-    fields: 'title,Description', // Ensure these field names match what's available in your Cargo table
+    fields: '_pageName=title,Description',
   });
 
   try {
     const response = await fetch(`${apiUrl}?${params.toString()}`);
-    const jsonResponse = await response.json();
+    const data = await response.json();
 
-    if (!jsonResponse.cargoquery) {
-      console.error('No cargoquery data found in response');
-      return [];
-    }
-
-    const simplifiedRecords: CargoRecord[] = jsonResponse.cargoquery.map((record) => ({
-      title: record.title.title,
-      description: record.title.Description, // Extract description if needed
+    const records = data.cargoquery || [];
+    const simplifiedRecords: CargoRecord[] = records.map((record: any) => ({
+      title: record.title.title, // Adjust according to actual response structure
     }));
 
     return simplifiedRecords;
