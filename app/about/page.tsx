@@ -7,7 +7,6 @@ const AboutPage: React.FC = () => {
       <p>This is a simple Next.js webpage using the app directory.</p>
     </div>
   );
-}
+};
 
 export default AboutPage;
-
