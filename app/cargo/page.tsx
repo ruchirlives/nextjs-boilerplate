@@ -2,7 +2,7 @@
 import React from 'react';
 import { fetchCargoRecords } from '../../utils/fetchCargoRecords';
 
-const CargoPageServer() = () => {
+CargoPageServer() = () => {
   const wikiUrl = 'https://digitaltransformation.miraheze.org';
   const tableName = 'DigitalResource';
   // Adjust the limit as needed
