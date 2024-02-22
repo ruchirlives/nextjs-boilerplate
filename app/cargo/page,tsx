@@ -1,0 +1,31 @@
+import React from 'react';
+import { fetchCargoRecords } from '../utils/fetchCargoRecords';
+
+interface CargoProps {
+  records: { title: string }[];
+}
+
+const CargoPage: React.FC<CargoProps> = ({ records }) => {
+  return (
+    <div>
+      <h1>Cargo Records</h1>
+      <ul>
+        {records.map((record, index) => (
+          <li key={index}>{record.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export async function getServerSideProps() {
+  const wikiUrl = 'https://digitaltransformation.miraheze.org';
+  const tableName = 'DigitalResource';
+  const records = await fetchCargoRecords(wikiUrl, tableName, 80);
+
+  return {
+    props: { records }, // will be passed to the page component as props
+  };
+}
+
+export default CargoPage;
