@@ -13,10 +13,11 @@ const AboutPage: React.FC = () => {
               width={100}
               height={24}
               priority/>
+    
+      <div>
+        <img src="https://res.cloudinary.com/ruchirlives/image/upload/v1615313157/Scotland_AMO_2008129_lrg_vbmnom.jpg"></img>
+      </div>
     </div>
-    <div>
-      <img src="https://res.cloudinary.com/ruchirlives/image/upload/v1615313157/Scotland_AMO_2008129_lrg_vbmnom.jpg"></img>
-    <\div>
   );
 }
 
