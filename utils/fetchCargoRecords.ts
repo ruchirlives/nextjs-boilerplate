@@ -28,7 +28,7 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
   });
 
   try {
-    const response = await fetch(`${apiuRL}?${params.toString()}`);
+    const response = await fetch(`${apiUrl}?${params.toString()}`);
     const jsonResponse: { cargoquery?: CargoQueryResponse['cargoquery'] } = await response.json();
 
     if (!jsonResponse.cargoquery) {
