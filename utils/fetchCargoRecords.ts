@@ -17,7 +17,7 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
 
   try {
     const response = await fetch(`${apiUrl}?${params.toString()}`);
-    const data = await response.json();
+    const data: CargoRecord[] = await response.json();
 
     const records = data.cargoquery || [];
     const simplifiedRecords: CargoRecord[] = records.map((record: any) => ({
