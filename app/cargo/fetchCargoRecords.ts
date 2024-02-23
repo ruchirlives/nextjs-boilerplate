@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 interface CargoRecord {
   title: string;
-  Description: string;
+  description: string;
 }
 
 interface CargoData {
@@ -25,9 +25,9 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
     const data: any = await response.json();
 
     const records: CargoData[] = data.cargoquery || [];
-    const simplifiedRecords: CargoRecord[] = records.map((record: any) => ({
+    const simplifiedRecords: CargoRecord[] = records.map((record) => ({
       title: record.title.title,
-      Description: record.title.Description // Adjust according to actual response structure
+      description: record.title.Description // Adjust according to actual response structure
     }));
 
     return simplifiedRecords;
