@@ -24,7 +24,7 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
     const response = await fetch(`${apiUrl}?${params.toString()}`);
     const data: any = await response.json();
 
-    const records: CargoData[] = data.cargoquery || [];
+    const records = data.cargoquery || [];
     const simplifiedRecords: CargoRecord[] = records.map((record) => ({
       title: record.title.title,
       description: record.title.Description // Adjust according to actual response structure
