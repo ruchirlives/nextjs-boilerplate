@@ -14,7 +14,7 @@ const CargoPage = async () => {
       <h1>Cargo Records</h1>
       <ul>
         {records.map((record, index) => (
-          <li key={index}>{record.title}: {record.Description}</li>
+          <li key={index}>{record.title}: {record.description}</li>
         ))}
       </ul>
     </div>
