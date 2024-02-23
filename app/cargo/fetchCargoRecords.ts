@@ -12,10 +12,7 @@ interface CargoRecord {
 // For example, if the title object contains `title` and `Description` fields, 
 // you would define it as shown below. Adjust this according to the actual data structure.
 interface CargoData {
-  title: {
-    title: string;
-    Description: string;
-  };
+  title: object;
 }
 
 export async function fetchCargoRecords(wikiUrl: string, table: string, limit: number = 10): Promise<CargoRecord[]> {
