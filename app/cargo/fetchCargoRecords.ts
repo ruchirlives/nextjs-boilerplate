@@ -30,7 +30,8 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
     const response = await fetch(`${apiUrl}?${params.toString()}`);
     // If you expect the response to match a specific structure, it's a good practice to type it accordingly.
     // Assuming the JSON response has a specific structure, you would adjust this typing.
-    const data: { cargoquery: CargoData[] } = await response.json();
+    const data = await response.json() as { cargoquery: CargoData[] };
+
 
     const records = data.cargoquery || [];
     const simplifiedRecords: CargoRecord[] = records.map((record) => ({
