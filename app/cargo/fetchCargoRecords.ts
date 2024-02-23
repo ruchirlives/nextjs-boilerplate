@@ -27,7 +27,7 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
     const records: CargoData[] = data.cargoquery || [];
     const simplifiedRecords: CargoRecord[] = records.map((record: any) => ({
       title: record.title.title,
-      description: record.title.Description // Adjust according to actual response structure
+      Description: record.title.Description // Adjust according to actual response structure
     }));
 
     return simplifiedRecords;
