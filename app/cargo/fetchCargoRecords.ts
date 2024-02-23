@@ -1,16 +1,9 @@
 import fetch from 'node-fetch';
 
-// This interface accurately reflects the expected structure of each record.
 interface CargoRecord {
   title: string;
-  description: string;
 }
 
-// If CargoData is intended to represent the structure of data as returned by the API,
-// ensure it matches the actual data structure. Assuming that `title` is indeed supposed to be an object,
-// ensure that the structure of this object is correctly represented. 
-// For example, if the title object contains `title` and `Description` fields, 
-// you would define it as shown below. Adjust this according to the actual data structure.
 interface CargoData {
   title: object;
 }
@@ -28,15 +21,14 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
 
   try {
     const response = await fetch(`${apiUrl}?${params.toString()}`);
-    // If you expect the response to match a specific structure, it's a good practice to type it accordingly.
-    // Assuming the JSON response has a specific structure, you would adjust this typing.
-    const data = await response.json() as { cargoquery: CargoData[] };
+    const data: any = await response.json();
 
+    const records: CargoData[] = data.cargoquery || [];
+    const simplifiedRecords: CargoRecord[] = records.map((record: any) => ({
+      title: record.title.title, // Adjust according to actual response structure
+    }));
 
-    const records = data.cargoquery || [];
-    
-
-    return records;
+    return simplifiedRecords;
   } catch (e) {
     console.error(`Error fetching records from Cargo table: ${e}`);
     return [];
