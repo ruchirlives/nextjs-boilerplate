@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 
 interface CargoRecord {
   title: string;
+  description: string;
 }
 
 interface CargoData {
