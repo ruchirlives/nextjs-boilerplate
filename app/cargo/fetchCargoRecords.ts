@@ -6,7 +6,7 @@ interface CargoData {
 
 type SimplifiedCargoRecord = Record<string, string>;
 
-export async function fetchCargoRecords(wikiUrl: string, table: string, limit: number = 10): Promise<CargoRecord[]> {
+export async function fetchCargoRecords(wikiUrl: string, table: string, limit: number = 10): Promise {
   const apiUrl = `${wikiUrl}/w/api.php`;
 
   const params = new URLSearchParams({
