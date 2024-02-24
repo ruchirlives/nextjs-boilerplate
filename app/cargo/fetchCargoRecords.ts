@@ -4,9 +4,9 @@ interface CargoData {
   title: object;
 }
 
-type SimplifiedCargoRecord = Record<string, string>;
+type CargoRecord = Record<string, string>;
 
-export async function fetchCargoRecords(wikiUrl: string, table: string, limit: number = 10): Promise {
+export async function fetchCargoRecords(wikiUrl: string, table: string, limit: number = 10): Promise<CargoRecord[]> {
   const apiUrl = `${wikiUrl}/w/api.php`;
 
   const params = new URLSearchParams({
@@ -22,7 +22,7 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
     const data: any = await response.json();
 
     const records: CargoData[] = data.cargoquery || [];
-    const simplifiedRecords = records.map(({ title }: { title: any }) => ({
+    const simplifiedRecords= records.map(({ title }: { title: any }) => ({
       ...title
     }));
 
