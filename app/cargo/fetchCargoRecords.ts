@@ -18,7 +18,7 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
     tables: table,
     limit: limit.toString(),
     format: 'json',
-    fields: '_pageName=title,Description=description',
+    fields: '_pageName=title,Description=description,Image=image',
   });
 
   try {
