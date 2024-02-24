@@ -1,14 +1,10 @@
 import fetch from 'node-fetch';
 
-interface CargoRecord {
-  title: string;
-  description: string;
-  image: string;
-}
-
 interface CargoData {
   title: object;
 }
+
+type SimplifiedCargoRecord = Record<string, string>;
 
 export async function fetchCargoRecords(wikiUrl: string, table: string, limit: number = 10): Promise<CargoRecord[]> {
   const apiUrl = `${wikiUrl}/w/api.php`;
@@ -18,7 +14,7 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
     tables: table,
     limit: limit.toString(),
     format: 'json',
-    fields: '_pageName=title,Description=description,Image=image',
+    fields: '_pageName=title,Description=description,Image=image,Link=link,Type=type',
   });
 
   try {
@@ -26,10 +22,8 @@ export async function fetchCargoRecords(wikiUrl: string, table: string, limit: n
     const data: any = await response.json();
 
     const records: CargoData[] = data.cargoquery || [];
-    const simplifiedRecords: CargoRecord[] = records.map((record: any) => ({
-      title: record.title.title,
-      description: record.title.description,
-      image: record.title.image // Adjust according to actual response structure
+    const simplifiedRecords = records.map(({ title }: { title: any }) => ({
+      ...title
     }));
 
     return simplifiedRecords;
