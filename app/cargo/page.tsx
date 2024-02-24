@@ -11,7 +11,7 @@ const CargoPage = async () => {
 
   return (
     <div className="m-4 text-gray-800 dark:text-gray-200">
-      <br></br>
+      <h1 className='font-bold text-lg mb-2'>Digital Wiki Resources</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {records.map((record, index) => (
           <div key={index} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-md p-4 flex flex-col items-left">
