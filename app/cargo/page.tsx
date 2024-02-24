@@ -18,7 +18,7 @@ const CargoPage = async () => {
             {record.image && (
               <div className="w-full h-64 relative mb-4">
                 {/* Use the Image component for optimized loading */}
-                <Image src={record.image} alt={record.title} layout="fill" objectFit="cover" />
+                <Image src={record.image} alt={record.title} layout="fill" objectFit="cover" unoptimized />
               </div>
             )}
             <h2 className="font-bold text-lg mb-2">{record.title}</h2>
