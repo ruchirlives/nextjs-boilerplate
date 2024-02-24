@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Image from 'next/image'; // Import if using Next.js Image component for optimization
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,12 +17,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      
+      <head>
+        {/* Ensure you include any head elements here */}
+      </head>
       <body className={inter.className}>
-        <h1>HELLO</h1>
-        
+        {/* Banner with SDG logo and title */}
+        <div className="banner flex items-center justify-start p-4 bg-blue-100">
+          {/* Adjust the path as necessary */}
+          <Image src="/sdg-logo.png" alt="SDG Logo" width={100} height={100} />
+          <h1 className="text-xl ml-4">Digital Enablers for Natural Capital</h1>
+        </div>
+
+        {/* Your main content */}
         {children}
-      
       </body>
     </html>
   );
