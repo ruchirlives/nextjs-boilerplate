@@ -16,15 +16,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark"> {/* Optionally toggle the 'dark' class based on user preference */}
       <head>
         {/* Ensure you include any head elements here */}
       </head>
-      <body className={inter.className}>
-        {/* Banner with SDG logo and title */}
-        <div className="banner flex items-center justify-start p-4 bg-blue-100">
-          {/* Adjust the path as necessary */}
-          <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Sustainable_Development_Goals_-_logo.svg/240px-Sustainable_Development_Goals_-_logo.svg.png" alt="SDG Logo" width={100} height={100} />
+      <body className={`${inter.className} bg-white dark:bg-black text-black dark:text-white`}>
+        {/* Banner with SDG logo and title, adjusted for dark mode */}
+        <div className="banner flex items-center justify-start p-4 bg-blue-100 dark:bg-gray-800">
+          {/* SDG Logo using hotlink */}
+          <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Sustainable_Development_Goals_-_logo.svg/240px-Sustainable_Development_Goals_-_logo.svg.png" alt="SDG Logo" width={100} height={100} unoptimized={true} />
           <h1 className="text-xl ml-4">Digital Enablers for Natural Capital</h1>
         </div>
 
