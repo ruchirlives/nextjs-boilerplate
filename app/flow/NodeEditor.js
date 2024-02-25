@@ -18,7 +18,7 @@ const defaultEdgeOptions = {
     type: "arrowclosed",
     color: "#000",
   },
-  interactionWidth: 30,
+  interactionWidth: 100,
 };
 
 const initialNodes = [
