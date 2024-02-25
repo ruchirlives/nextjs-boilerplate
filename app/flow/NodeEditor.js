@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useCallback } from "react";
 import ReactFlow, {
+  useViewport,
   MiniMap,
   Controls,
   addEdge,
@@ -39,6 +40,7 @@ const initialEdges = [
 const NodeEditor = () => {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+  const { x, y, zoom } = useViewport();
 
   const onNodesChange = useCallback(
     (changes) => setNodes(applyNodeChanges(changes, nodes)),
@@ -53,25 +55,29 @@ const NodeEditor = () => {
     [edges]
   );
 
-  // Handler for double-clicking on the canvas
-  const handlePaneDoubleClick = useCallback((event) => {
-    const reactFlowBounds = event.currentTarget.getBoundingClientRect();
+  const handleNodeDelete = (nodeId) => {
+    setNodes((currentNodes) => currentNodes.filter(node => node.id !== nodeId));
+  };
 
-    // Calculate position without useZoomPanHelper
+  // Handler for double-clicking on the canvas
+  const handlePaneClick = useCallback((event) => {
+    const reactFlowBounds = event.currentTarget.getBoundingClientRect();
     const position = {
-      x: event.clientX - reactFlowBounds.left,
-      y: event.clientY - reactFlowBounds.top,
+      // Adjust the position calculation to use the viewport values captured outside the callback
+      x: ((event.clientX - reactFlowBounds.left) - x) / zoom,
+      y: ((event.clientY - reactFlowBounds.top) - y) / zoom,
     };
 
     const newNode = {
       id: `UMLClassNode_${Date.now()}`,
-      type: "UMLClassNode",
+      type: 'UMLClassNode', // Make sure this type matches your custom node type
       position: position, // Using calculated position
-      data: { name: "New Class", attributes: [], methods: [] },
+      data: { name: 'New Class', attributes: [], methods: [] },
     };
 
     setNodes((prevNodes) => prevNodes.concat(newNode));
-  }, []);
+  }, [x, y, zoom]); // Include x, y, zoom in the dependency array to ensure the callback updates with their latest values
+
 
   const nodeTypes = useMemo(() => {
     // Directly define NodeDataChange here if it has no external dependencies
@@ -87,7 +93,7 @@ const NodeEditor = () => {
 
     return {
       UMLClassNode: (nodeProps) => (
-        <UMLClassNode {...nodeProps} onNodeDataChange={NodeDataChange} />
+        <UMLClassNode {...nodeProps} onDelete={handleNodeDelete} onNodeDataChange={NodeDataChange} />
       ),
     };
   }, []); // Empty dependency array if there are truly no dependencies
@@ -100,7 +106,7 @@ const NodeEditor = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        onPaneClick={handlePaneDoubleClick}
+        onPaneClick={handlePaneClick}
         nodeTypes={nodeTypes}
         fitView
       >
