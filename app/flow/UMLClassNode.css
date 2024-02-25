@@ -1,0 +1,57 @@
+.umlClassNode {
+    border: 2px solid #ccc; /* Lighter border for contrast */
+    border-radius: 8px;
+    background-color: #333; /* Dark background */
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(255,255,255,0.1); /* Lighter shadow for dark mode */
+    font-family: Arial, sans-serif;
+    color: #fff; /* Light text color */
+}
+
+.umlClassNode .title {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+    color: #fff; /* Ensure title is visible */
+}
+
+.umlClassNode hr {
+    border-color: #555; /* Lighter HR for contrast */
+    margin: 5px 0;
+}
+
+.umlClassNode .section {
+    margin-bottom: 5px;
+}
+
+.umlClassNode .section:last-child {
+    margin-bottom: 0;
+}
+
+.umlClassNode .section strong {
+    display: block;
+    margin-bottom: 2px;
+    color: #fff; /* Light text for visibility */
+}
+
+.umlClassNode .item {
+    padding: 2px 5px;
+    cursor: pointer;
+    color: #ddd; /* Lighter text color for items */
+}
+
+.umlClassNode .item:hover {
+    background-color: #555; /* Darker background on hover for contrast */
+}
+
+/* Editable text input */
+.umlClassNode .editInput {
+    width: calc(100% - 10px);
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #aaa; /* Lighter border for visibility */
+    border-radius: 5px;
+    background-color: #222; /* Darker background for input */
+    color: #fff; /* Light text color for input */
+}
