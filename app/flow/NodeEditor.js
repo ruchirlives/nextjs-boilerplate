@@ -10,6 +10,12 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import UMLClassNode from "./UMLClassNode";
 
+const defaultEdgeOptions = {
+  interactionWidth: 150,
+  edgeUpdaterRadius: 150,
+  edgesUpdatable: true
+};
+
 const initialNodes = [
   {
     id: "1",
@@ -173,6 +179,7 @@ const NodeEditor = () => {
         onConnect={onConnect}
         onPaneClick={handlePaneClick}
         nodeTypes={nodeTypes}
+        defaultEdgeOptions={defaultEdgeOptions}
         fitView
       >
         <MiniMap />
