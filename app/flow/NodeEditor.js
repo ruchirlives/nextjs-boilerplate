@@ -119,7 +119,6 @@ const NodeEditor = () => {
         onConnect={onConnect}
         onPaneClick={handlePaneClick}
         nodeTypes={nodeTypes}
-        defaultEdgeOptions={defaultEdgeOptions}
         fitView
       >
         <MiniMap />
