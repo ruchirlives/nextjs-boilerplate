@@ -70,6 +70,7 @@ const NodeEditor = () => {
   // Handler for double-clicking on the canvas
   const handlePaneClick = useCallback(
     (event) => {
+      event.preventDefault();
       const reactFlowBounds = event.currentTarget.getBoundingClientRect();
       const position = {
         // Adjust the position calculation to use the viewport values captured outside the callback
@@ -177,7 +178,7 @@ const NodeEditor = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        onPaneClick={handlePaneClick}
+        onPaneContextMenu={handlePaneClick}
         nodeTypes={nodeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
         fitView
@@ -186,7 +187,7 @@ const NodeEditor = () => {
         <Controls />
       </ReactFlow>
 
-      <div className="fixed bottom-4 right-4 z-50 flex space-x-2">
+      <div className="fixed top-20 right-4 z-50 flex space-x-2">
         <input
           type="file"
           id="fileInput"
