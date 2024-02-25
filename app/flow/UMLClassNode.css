@@ -73,7 +73,7 @@ background-color: #0056b3;
 
 /* Container for the context menu */
 .context-menu {
-    width: 150px;
+    width: 75px;
     background-color: #494040;
     border: 1px solid #dadce0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);

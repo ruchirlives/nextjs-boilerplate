@@ -5,7 +5,7 @@ import ReactFlow, {
   Controls,
   addEdge,
   applyNodeChanges,
-  applyEdgeChanges,
+  applyEdgeChanges
 } from "reactflow";
 import "reactflow/dist/style.css";
 import UMLClassNode from "./UMLClassNode";
@@ -67,32 +67,28 @@ const NodeEditor = () => {
   );
 
   const handleNodeDelete = (nodeId) => {
-    setNodes((currentNodes) =>
-      currentNodes.filter((node) => node.id !== nodeId)
-    );
+    setNodes((currentNodes) => currentNodes.filter(node => node.id !== nodeId));
   };
 
   // Handler for double-clicking on the canvas
-  const handlePaneClick = useCallback(
-    (event) => {
-      const reactFlowBounds = event.currentTarget.getBoundingClientRect();
-      const position = {
-        // Adjust the position calculation to use the viewport values captured outside the callback
-        x: (event.clientX - reactFlowBounds.left - x) / zoom,
-        y: (event.clientY - reactFlowBounds.top - y) / zoom,
-      };
+  const handlePaneClick = useCallback((event) => {
+    const reactFlowBounds = event.currentTarget.getBoundingClientRect();
+    const position = {
+      // Adjust the position calculation to use the viewport values captured outside the callback
+      x: ((event.clientX - reactFlowBounds.left) - x) / zoom,
+      y: ((event.clientY - reactFlowBounds.top) - y) / zoom,
+    };
 
-      const newNode = {
-        id: `UMLClassNode_${Date.now()}`,
-        type: "UMLClassNode", // Make sure this type matches your custom node type
-        position: position, // Using calculated position
-        data: { name: "New Class", attributes: [], methods: [] },
-      };
+    const newNode = {
+      id: `UMLClassNode_${Date.now()}`,
+      type: 'UMLClassNode', // Make sure this type matches your custom node type
+      position: position, // Using calculated position
+      data: { name: 'New Class', attributes: [], methods: [] },
+    };
 
-      setNodes((prevNodes) => prevNodes.concat(newNode));
-    },
-    [x, y, zoom]
-  ); // Include x, y, zoom in the dependency array to ensure the callback updates with their latest values
+    setNodes((prevNodes) => prevNodes.concat(newNode));
+  }, [x, y, zoom]); // Include x, y, zoom in the dependency array to ensure the callback updates with their latest values
+
 
   const nodeTypes = useMemo(() => {
     // Directly define NodeDataChange here if it has no external dependencies
@@ -108,74 +104,13 @@ const NodeEditor = () => {
 
     return {
       UMLClassNode: (nodeProps) => (
-        <UMLClassNode
-          {...nodeProps}
-          onDelete={handleNodeDelete}
-          onNodeDataChange={NodeDataChange}
-        />
+        <UMLClassNode {...nodeProps} onDelete={handleNodeDelete} onNodeDataChange={NodeDataChange} />
       ),
     };
   }, []); // Empty dependency array if there are truly no dependencies
 
-  // Export function
-  const exportNodesToJson = useCallback(() => {
-    const exportData = {
-      nodes,
-      edges,
-    }; // Combine nodes and edges into a single object
-
-    const fileName = "reactflow_export.json";
-    const jsonStr = JSON.stringify(exportData, null, 2); // Pretty print the JSON
-    const element = document.createElement("a");
-    element.setAttribute(
-      "href",
-      "data:text/json;charset=utf-8," + encodeURIComponent(jsonStr)
-    );
-    element.setAttribute("download", fileName);
-
-    document.body.appendChild(element); // Required for this to work in Firefox
-    element.click();
-    document.body.removeChild(element);
-  }, [nodes, edges]); // Depend on both the nodes and edges state
-
-  const handleFileImport = (event) => {
-    const fileReader = new FileReader();
-    fileReader.readAsText(event.target.files[0], "UTF-8");
-    fileReader.onload = (e) => {
-      try {
-        const importedData = JSON.parse(e.target.result);
-
-        // Assuming the imported JSON structure includes both nodes and edges
-        if (
-          importedData &&
-          Array.isArray(importedData.nodes) &&
-          Array.isArray(importedData.edges)
-        ) {
-          setNodes(importedData.nodes);
-          setEdges(importedData.edges);
-        } else {
-          // Handle the case where the structure is not as expected
-          console.error(
-            "Imported data does not match the expected structure:",
-            importedData
-          );
-          alert(
-            "The imported JSON does not contain a valid structure for nodes and edges."
-          );
-        }
-      } catch (error) {
-        console.error("Error parsing JSON:", error);
-        alert("Failed to parse JSON. Please check the file format.");
-      }
-    };
-    fileReader.onerror = (error) => {
-      console.error("FileReader error:", error);
-      alert("Error reading the file. Please try again.");
-    };
-  };
-
   return (
-    <div style={{ height: 700 }}>
+    <div style={{ height: 500 }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -190,28 +125,6 @@ const NodeEditor = () => {
         <MiniMap />
         <Controls />
       </ReactFlow>
-
-      <div className="fixed bottom-4 right-4 z-50 flex space-x-2">
-        <input
-          type="file"
-          id="fileInput"
-          className="hidden"
-          onChange={handleFileImport}
-          accept=".json"
-        />
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded"
-          onClick={() => document.getElementById("fileInput").click()}
-        >
-          Import JSON
-        </button>
-        <button
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
-          onClick={exportNodesToJson}
-        >
-          Export All Nodes to JSON
-        </button>
-      </div>
     </div>
   );
 };
