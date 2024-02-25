@@ -10,6 +10,17 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import UMLClassNode from "./UMLClassNode";
 
+const defaultEdgeOptions = {
+  type: "smoothstep",
+  animated: true,
+  style: { stroke: "#000" },
+  markerEnd: {
+    type: "arrowclosed",
+    color: "#000",
+  },
+  interactionWidth: 30,
+};
+
 const initialNodes = [
   {
     id: "1",
@@ -173,6 +184,7 @@ const NodeEditor = () => {
         onConnect={onConnect}
         onPaneClick={handlePaneClick}
         nodeTypes={nodeTypes}
+        defaultEdgeOptions={defaultEdgeOptions}
         fitView
       >
         <MiniMap />
