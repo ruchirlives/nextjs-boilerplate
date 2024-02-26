@@ -8,7 +8,7 @@ import ReactFlow, {
   applyEdgeChanges,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import UMLClassNode from "./UMLClassNode";
+import UMLClassNode from "./UMLClassNode/UMLClassNode";
 
 const defaultEdgeOptions = {
   interactionWidth: 150,
