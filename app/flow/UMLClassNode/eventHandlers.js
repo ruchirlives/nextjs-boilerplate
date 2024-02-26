@@ -23,7 +23,8 @@ export function eventHandlers(
   };
 
   // Adjusted handleChange function to manage input changes
-  const handleChange = (type, value, index = null) => {
+  const handleChange = (type, e, index = null) => {
+    const value = e.target.value
     setEditableData((prevData) => {
       if (type === "name") {
         return { ...prevData, name: value };
@@ -41,8 +42,6 @@ export function eventHandlers(
   const saveChanges = (type, index = null) => {
     setEditableData((prevData) => {
       // Now, prevData is correctly accessed within this callback
-      console.log(prevData); // This log is now valid
-
       if (type === "name") {
         return { ...prevData, name: prevData.name };
       } else if (prevData[type] && Array.isArray(prevData[type])) {
@@ -58,7 +57,7 @@ export function eventHandlers(
         };
       } else {
         // Log an error or handle the case where type is not as expected
-        console.error(`Unexpected type or undefined array for type: ${type}`);
+        // console.error(`Unexpected type or undefined array for type: ${type}`);
         return { ...prevData }; // Return the current state unchanged
       }
     });

@@ -19,7 +19,7 @@ export function generateAttributes(
               type="text"
               value={attribute}
               onChange={(e) =>
-                handleChange("attributes", e.target.value, index)
+                handleChange("attributes", e, index)
               }
               onBlur={() => {
                 if (attribute === "") {

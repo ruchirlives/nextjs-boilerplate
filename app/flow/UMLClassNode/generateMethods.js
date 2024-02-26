@@ -18,7 +18,7 @@ export function generateMethods(
               key={index}
               type="text"
               value={method}
-              onChange={(e) => handleChange("methods", e.target.value, index)}
+              onChange={(e) => handleChange("methods", e, index)}
               onBlur={() => {
                 if (method === "") {
                   saveChanges("methods", index); // This will remove the entry if it's empty
