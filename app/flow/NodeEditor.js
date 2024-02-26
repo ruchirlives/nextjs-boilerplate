@@ -47,6 +47,7 @@ const NodeEditor = () => {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const { x, y, zoom } = useViewport();
+  const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 });
 
   const onNodesChange = useCallback(
     (changes) => setNodes(applyNodeChanges(changes, nodes)),
@@ -206,6 +207,12 @@ const NodeEditor = () => {
           onClick={exportNodesToJson}
         >
           Export All Nodes to JSON
+        </button>
+        <button
+          className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
+          onClick={handlePaneClick}
+        >
+          New Node
         </button>
       </div>
     </div>
