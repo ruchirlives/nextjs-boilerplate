@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Handle, Position } from "reactflow";
 import "./UMLClassNode.css";
 import { ContextMenu } from "./ContextMenu";
-import { generateMethods } from "./generateMethods";
-import { generateAttributes } from "./generateAttributes";
 import { generateName } from "./generateName";
+import { generateSection } from "./generateSection";
 import { eventHandlers } from "./eventHandlers";
 import useLongPress from "./useLongPress";
 
@@ -14,12 +13,14 @@ const UMLClassNode = ({ id, data, onDelete }) => {
     name: data.name,
     attributes: data.attributes || [],
     methods: data.methods || [],
+    notes: data.notes || []
   });
 
   const [editState, setEditState] = useState({
     name: false,
     attributes: Array(data.attributes.length).fill(false),
     methods: Array(data.methods.length).fill(false),
+    notes: Array(data.methods.length).fill(false)
   });
 
   const [menuVisible, setMenuVisible] = useState(false);
@@ -38,6 +39,7 @@ const UMLClassNode = ({ id, data, onDelete }) => {
     toggleEditState,
     addAttribute,
     addMethod,
+    addNotes,
     deleteNode,
   } = eventHandlers(
     setEditState,
@@ -63,22 +65,36 @@ const UMLClassNode = ({ id, data, onDelete }) => {
         longPressProps
       )}
       <hr />
-      {generateAttributes(
+      {generateSection(
+        "attributes",
         editableData,
         editState,
         handleChange,
         saveChanges,
         toggleEditState,
-        addAttribute
+        addAttribute // Assuming addAttribute is a function specific to adding a new attribute
       )}
-      {generateMethods(
+
+      {generateSection(
+        "methods",
         editableData,
         editState,
         handleChange,
         saveChanges,
         toggleEditState,
-        addMethod
+        addMethod // Assuming addMethod is a function specific to adding a new method
       )}
+
+      {generateSection(
+        "notes",
+        editableData,
+        editState,
+        handleChange,
+        saveChanges,
+        toggleEditState,
+        addNotes // Assuming addMethod is a function specific to adding a new method
+      )}
+
       <Handle
         type="source"
         position={Position.Bottom}

@@ -24,7 +24,7 @@ export function eventHandlers(
 
   // Adjusted handleChange function to manage input changes
   const handleChange = (type, e, index = null) => {
-    const value = e.target.value
+    const value = e.target.value;
     setEditableData((prevData) => {
       if (type === "name") {
         return { ...prevData, name: value };
@@ -69,6 +69,7 @@ export function eventHandlers(
         name: false,
         attributes: Array(editableData.attributes.length).fill(false),
         methods: Array(editableData.methods.length).fill(false),
+        notes: Array(editableData.notes.length).fill(false),
       }));
     } else {
       setEditState((prevState) => ({
@@ -80,39 +81,16 @@ export function eventHandlers(
     }
   };
 
-  const addAttribute = () => {
-    setEditableData((prevData) => ({
-      ...prevData,
-      attributes: [...prevData.attributes, ""], // Add an empty string as a new attribute
-    }));
-    setEditState((prevState) => ({
-      ...prevState,
-      attributes: [...prevState.attributes, true], // Set the new attribute to be in edit mode
-    }));
-  };
-
-  const addMethod = () => {
-    setEditableData((prevData) => ({
-      ...prevData,
-      methods: [...prevData.methods, ""], // Add an empty string as a new method
-    }));
-    setEditState((prevState) => ({
-      ...prevState,
-      methods: [...prevState.methods, true], // Set the new method to be in edit mode
-    }));
-  };
-
-  const enableNodeMenu = () => {
-    // Capture the properties you need from the event
-    setTimeout(() => {
-      // Use the captured properties here
-      // Your logic to display the menu, using pageX and pageY
-      const position = { x: 10, y: 10 };
-      setMenuPosition(position);
-      setMenuVisible(true);
-    }, 500); // Adjust the timeout duration as needed
-  };
-
+  // const enableNodeMenu = () => {
+  //   // Capture the properties you need from the event
+  //   setTimeout(() => {
+  //     // Use the captured properties here
+  //     // Your logic to display the menu, using pageX and pageY
+  //     const position = { x: 10, y: 10 };
+  //     setMenuPosition(position);
+  //     setMenuVisible(true);
+  //   }, 500); // Adjust the timeout duration as needed
+  // };
 
   const deleteNode = () => {
     console.log("Delete node logic here");
@@ -126,6 +104,22 @@ export function eventHandlers(
     setMenuPosition(position); // Position your custom context menu
     setMenuVisible(true); // Show your custom context menu
   };
+
+  const addItem = (type) => {
+    setEditableData((prevData) => {
+      const updatedList = [...prevData[type], ""]; // Add an empty string as a new item
+      return { ...prevData, [type]: updatedList };
+    });
+    setEditState((prevState) => {
+      const updatedEditState = [...prevState[type], true]; // Set the new item to be in edit mode
+      return { ...prevState, [type]: updatedEditState };
+    });
+  };
+  // Convert specific add methods to use the generic addItem function
+  const addAttribute = () => addItem("attributes");
+  const addMethod = () => addItem("methods");
+  const addNotes = () => addItem("notes");
+
   return {
     handleRightClick,
     handleChange,
@@ -133,6 +127,7 @@ export function eventHandlers(
     toggleEditState,
     addAttribute,
     addMethod,
+    addNotes,
     deleteNode,
   };
 }
