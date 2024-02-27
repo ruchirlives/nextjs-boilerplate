@@ -25,7 +25,6 @@ const initialNodes = [
       name: "Person",
       attributes: ["+name: string", "+age: int"],
       methods: ["+getName(): string", "+getAge(): int"],
-      notes: ["first", "second"]
     },
   },
   {
@@ -48,6 +47,7 @@ const NodeEditor = () => {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const { x, y, zoom } = useViewport();
+  const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 });
 
   const onNodesChange = useCallback(
     (changes) => setNodes(applyNodeChanges(changes, nodes)),

@@ -13,8 +13,7 @@ const UMLClassNode = ({ id, data, onDelete }) => {
     name: data.name,
     attributes: data.attributes || [],
     methods: data.methods || [],
-    notes: data.notes || [],
-    sections: Object.keys(data).filter(key => key !== 'name')
+    notes: data.notes || []
   });
 
   const [editState, setEditState] = useState({
