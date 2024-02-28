@@ -12,8 +12,8 @@ export function generateName(
     <input
       type="text"
       value={editableData.name}
+      onBlur={() => saveChanges("name")}
       onChange={(e) => handleChange("name", e)}
-      onBlur={saveChanges}
       autoFocus
       className="editInput nodrag"
     />

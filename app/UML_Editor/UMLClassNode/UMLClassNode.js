@@ -8,20 +8,30 @@ import { eventHandlers } from "./eventHandlers";
 import useLongPress from "./useLongPress";
 
 const UMLClassNode = ({ id, data, onDelete }) => {
-  // Edit state for name, attributes, and methods
-  const [editableData, setEditableData] = useState({
-    name: data.name,
-    attributes: data.attributes || [],
-    methods: data.methods || [],
-    notes: data.notes || []
-  });
+  // Dynamically determine sections excluding 'name'
+  const sections = Object.keys(data).filter((key) => key !== "name");
 
-  const [editState, setEditState] = useState({
-    name: false,
-    attributes: Array(data.attributes.length).fill(false),
-    methods: Array(data.methods.length).fill(false),
-    notes: Array(data.methods.length).fill(false)
-  });
+  // Initialize editableData using dynamic sections
+  const [editableData, setEditableData] = useState(
+    sections.reduce(
+      (acc, section) => ({
+        ...acc,
+        [section]: data[section] || [],
+      }),
+      { name: data.name }
+    )
+  );
+
+  // Initialize editState for each section based on their lengths
+  const [editState, setEditState] = useState(
+    sections.reduce(
+      (acc, section) => ({
+        ...acc,
+        [section]: Array(data[section]?.length || 0).fill(false),
+      }),
+      { name: false }
+    ) // Assuming you want to track edit state for 'name' as well
+  );
 
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
@@ -37,18 +47,18 @@ const UMLClassNode = ({ id, data, onDelete }) => {
     handleChange,
     saveChanges,
     toggleEditState,
-    addAttribute,
-    addMethod,
-    addNotes,
     deleteNode,
-  } = eventHandlers(
+
+  } = eventHandlers({
     setEditState,
     setEditableData,
     editableData,
+    editState,
     setMenuPosition,
     setMenuVisible,
     onDelete,
     id
+  }
   );
 
   return (
@@ -65,34 +75,17 @@ const UMLClassNode = ({ id, data, onDelete }) => {
         longPressProps
       )}
       <hr />
-      {generateSection(
-        "attributes",
-        editableData,
-        editState,
-        handleChange,
-        saveChanges,
-        toggleEditState,
-        addAttribute // Assuming addAttribute is a function specific to adding a new attribute
-      )}
-
-      {generateSection(
-        "methods",
-        editableData,
-        editState,
-        handleChange,
-        saveChanges,
-        toggleEditState,
-        addMethod // Assuming addMethod is a function specific to adding a new method
-      )}
-
-      {generateSection(
-        "notes",
-        editableData,
-        editState,
-        handleChange,
-        saveChanges,
-        toggleEditState,
-        addNotes // Assuming addMethod is a function specific to adding a new method
+      {sections.map((sectionKey) =>
+        generateSection(
+          sectionKey,
+          editableData,
+          editState,
+          setEditableData,
+          setEditState,
+          handleChange,
+          saveChanges,
+          toggleEditState,
+        )
       )}
 
       <Handle
