@@ -13,22 +13,17 @@ export function generateSection(
   saveChanges,
   toggleEditState,
 ) {
-  const addItem = () => {
-    // Now accepting sectionKey as a parameter
-    setEditableData((editableData) => {
-      console.log(sectionKey)
-      // Check if the section exists and is an array; if not, initialize as an array
-      const updatedList = [...(editableData[sectionKey] || []), ""]; // Adds a new empty string item
-      return { ...editableData, [sectionKey]: updatedList };
+  const addItem = (type, e) => {
+    setEditableData((prevData) => {
+      const updatedList = [...prevData[type], "Hello"]; // Add an empty string as a new item
+      console.log(updatedList)
+      return { ...prevData, [type]: updatedList };
     });
-
-    setEditState((editableData) => {
-      // Similarly, ensure the edit state for the section is an array before adding true
-      const updatedEditState = [...(editableData[sectionKey] || []), true]; // Marks the new item as editable
-      return { ...editableData, [sectionKey]: updatedEditState };
+    setEditState((prevState) => {
+      const updatedEditState = [...prevState[type], true]; // Set the new item to be in edit mode
+      return { ...prevState, [type]: updatedEditState };
     });
   };
-
   return (
     <div>
       <strong>
@@ -56,7 +51,7 @@ export function generateSection(
             </li>
           )
         )}
-        <button onClick={addItem} className="addButton">
+        <button onClick={(e) => addItem(sectionKey, e)} className="addButton">
           Add {sectionKey.charAt(0).toUpperCase() + sectionKey.slice(1)}
         </button>
       </ul>

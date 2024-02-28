@@ -2,6 +2,7 @@ export function eventHandlers(
   setEditState,
   setEditableData,
   editableData,
+  editState,
   setMenuPosition,
   setMenuVisible,
   onDelete,
