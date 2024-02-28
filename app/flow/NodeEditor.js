@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useCallback } from "react";
 import ReactFlow, {
+  Background,
+  BackgroundVariant,
   useViewport,
   MiniMap,
   Controls,
@@ -14,7 +16,7 @@ import { initialNodes } from "./initialNodes";
 const defaultEdgeOptions = {
   interactionWidth: 150,
   edgeUpdaterRadius: 150,
-  edgesUpdatable: true
+  edgesUpdatable: true,
 };
 
 const initialEdges = [
@@ -163,6 +165,12 @@ const NodeEditor = () => {
       >
         <MiniMap />
         <Controls />
+        <Background
+          id="2"
+          gap={10}
+          color="grey"
+          variant={BackgroundVariant.Dots}
+        />
       </ReactFlow>
 
       <div className="fixed top-20 right-4 z-50 flex space-x-2">
