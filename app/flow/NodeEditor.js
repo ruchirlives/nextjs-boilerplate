@@ -25,7 +25,6 @@ const initialNodes = [
       name: "Person",
       attributes: ["+name: string", "+age: int"],
       methods: ["+getName(): string", "+getAge(): int"],
-      notes: ["first", "second"]
     },
   },
   {
@@ -36,6 +35,7 @@ const initialNodes = [
       name: "Another Person",
       attributes: ["+name: string", "+age: int"],
       methods: ["+getName(): string", "+getAge(): int"],
+      notes: ["first", "second"]
     },
   },
 ];
