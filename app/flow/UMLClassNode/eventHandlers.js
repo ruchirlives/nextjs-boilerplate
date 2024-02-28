@@ -1,20 +1,18 @@
-export function eventHandlers(
-  setEditState,
-  setEditableData,
-  editableData,
-  editableState,
-  setMenuPosition,
-  setMenuVisible,
-  onDelete,
-  id
-) {
+export function eventHandlers(params) {
+  const {
+    setEditState,
+    setEditableData,
+    setMenuPosition,
+    setMenuVisible,
+    onDelete,
+    id,
+  } = params;
+
   const toggleEditState = (type, index = null, e) => {
-    console.log(type, index)
     setEditState((prevState) => {
       // console.log(prevState)
       // Toggling for a singular field, like 'name' WHY IS IT TOGGLING TWICE?
       if (type === "name") {
-        console.log('toggle')
         return { ...prevState, name: !prevState.name };
       } else if (prevState[type] && Array.isArray(prevState[type])) {
         // Ensure the section exists and is an array before attempting to map
@@ -34,7 +32,7 @@ export function eventHandlers(
 
   // Adjusted handleChange function to manage input changes
   const handleChange = (type, e, index = null) => {
-    const value = e.target.value
+    const value = e.target.value;
     setEditableData((prevData) => {
       // console.log(type, index)
       if (type === "name") {
@@ -52,7 +50,6 @@ export function eventHandlers(
 
   const saveChanges = (type, index = null) => {
     setEditState((prevState) => {
-      console.log("saving");
       if (type === "name") {
         // If 'name' is being edited, simply set its edit state to false
         return { ...prevState, name: false };

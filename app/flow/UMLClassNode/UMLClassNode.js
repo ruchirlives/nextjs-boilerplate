@@ -49,7 +49,7 @@ const UMLClassNode = ({ id, data, onDelete }) => {
     toggleEditState,
     deleteNode,
 
-  } = eventHandlers(
+  } = eventHandlers({
     setEditState,
     setEditableData,
     editableData,
@@ -58,6 +58,7 @@ const UMLClassNode = ({ id, data, onDelete }) => {
     setMenuVisible,
     onDelete,
     id
+  }
   );
 
   return (

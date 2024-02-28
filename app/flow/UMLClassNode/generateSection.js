@@ -15,7 +15,7 @@ export function generateSection(
 ) {
   const addItem = (type, e) => {
     setEditableData((prevData) => {
-      const updatedList = [...prevData[type], "Hello"]; // Add an empty string as a new item
+      const updatedList = [...prevData[type], ""]; // Add an empty string as a new item
       console.log(updatedList)
       return { ...prevData, [type]: updatedList };
     });
