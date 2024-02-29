@@ -7,7 +7,7 @@ import { generateSection } from "./generateSection";
 import { eventHandlers } from "./eventHandlers";
 import useLongPress from "./useLongPress";
 
-const UMLClassNode = ({ id, data, onDelete }) => {
+const UMLClassNode = ({ id, data, onDelete, onNodeDataChange}) => {
   // Dynamically determine sections excluding 'name'
   const sections = Object.keys(data).filter((key) => key !== "name");
 
@@ -57,6 +57,7 @@ const UMLClassNode = ({ id, data, onDelete }) => {
     setMenuPosition,
     setMenuVisible,
     onDelete,
+    onNodeDataChange,
     id
   }
   );

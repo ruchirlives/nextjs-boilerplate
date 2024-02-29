@@ -27,6 +27,7 @@ const NodeEditor = () => {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const { x, y, zoom } = useViewport();
+  const [rfInstance, setRfInstance] = useState(null);
 
   const onNodesChange = useCallback(
     (changes) => setNodes(applyNodeChanges(changes, nodes)),
@@ -95,11 +96,7 @@ const NodeEditor = () => {
 
   // Export function
   const exportNodesToJson = useCallback(() => {
-    const exportData = {
-      nodes,
-      edges,
-    }; // Combine nodes and edges into a single object
-
+    const exportData = rfInstance.toObject();
     const fileName = "reactflow_export.json";
     const jsonStr = JSON.stringify(exportData, null, 2); // Pretty print the JSON
     const element = document.createElement("a");
@@ -112,7 +109,7 @@ const NodeEditor = () => {
     document.body.appendChild(element); // Required for this to work in Firefox
     element.click();
     document.body.removeChild(element);
-  }, [nodes, edges]); // Depend on both the nodes and edges state
+  }, [rfInstance]); // Depend on both the nodes and edges state
 
   const handleFileImport = (event) => {
     const fileReader = new FileReader();
@@ -127,7 +124,9 @@ const NodeEditor = () => {
           Array.isArray(importedData.nodes) &&
           Array.isArray(importedData.edges)
         ) {
+          console.log(importedData.nodes);
           setNodes(importedData.nodes);
+          console.log(nodes);
           setEdges(importedData.edges);
         } else {
           // Handle the case where the structure is not as expected
@@ -161,6 +160,7 @@ const NodeEditor = () => {
         onPaneContextMenu={handlePaneClick}
         nodeTypes={nodeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
+        onInit={setRfInstance}
         fitView
       >
         <MiniMap />

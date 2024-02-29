@@ -5,6 +5,7 @@ export function eventHandlers(params) {
     setMenuPosition,
     setMenuVisible,
     onDelete,
+    onNodeDataChange,
     id,
   } = params;
 
@@ -34,17 +35,24 @@ export function eventHandlers(params) {
   const handleChange = (type, e, index = null) => {
     const value = e.target.value;
     setEditableData((prevData) => {
-      // console.log(type, index)
+      let updatedData = {};
+
       if (type === "name") {
-        return { ...prevData, name: value };
+        updatedData = { ...prevData, name: value };
       } else {
-        return {
+        updatedData = {
           ...prevData,
           [type]: prevData[type].map((item, idx) =>
             idx === index ? value : item
           ),
         };
       }
+
+      // Here, call onNodeDataChange with the node's ID and the updated data
+      // This assumes that onNodeDataChange expects the node's ID and the new data object
+      onNodeDataChange(id, updatedData);
+
+      return updatedData;
     });
   };
 
