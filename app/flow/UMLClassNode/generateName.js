@@ -4,7 +4,7 @@ export function generateName(
   editState,
   editableData,
   handleChange,
-  saveChanges,
+  handleBlur,
   toggleEditState,
   longPressProps
 ) {
@@ -12,7 +12,7 @@ export function generateName(
     <input
       type="text"
       value={editableData.name}
-      onBlur={() => saveChanges("name")}
+      onBlur={() => handleBlur("name")}
       onChange={(e) => handleChange("name", e)}
       autoFocus
       className="editInput nodrag"

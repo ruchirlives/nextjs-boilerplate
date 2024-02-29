@@ -6,12 +6,15 @@ import ReactFlow, {
   MiniMap,
   Controls,
   addEdge,
+  useReactFlow,
   applyNodeChanges,
   applyEdgeChanges,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import UMLClassNode from "./UMLClassNode/UMLClassNode";
 import { initialNodes } from "./initialNodes";
+
+const flowKey = "MyFlow";
 
 const defaultEdgeOptions = {
   interactionWidth: 150,
@@ -24,29 +27,30 @@ const initialEdges = [
 ];
 
 const NodeEditor = () => {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
   const { x, y, zoom } = useViewport();
   const [rfInstance, setRfInstance] = useState(null);
+  const { setViewport } = useReactFlow();
 
   const onNodesChange = useCallback(
-    (changes) => setNodes(applyNodeChanges(changes, nodes)),
-    [nodes]
+    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    []
   );
   const onEdgesChange = useCallback(
-    (changes) => setEdges(applyEdgeChanges(changes, edges)),
-    [edges]
+    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    []
   );
   const onConnect = useCallback(
-    (connection) => setEdges(addEdge(connection, edges)),
+    (connection) => setEdges((eds) => addEdge(connection, edges)),
     [edges]
   );
 
-  const handleNodeDelete = (nodeId) => {
+  const handleNodeDelete = useCallback((nodeId) => {
     setNodes((currentNodes) =>
       currentNodes.filter((node) => node.id !== nodeId)
     );
-  };
+  }, []);
 
   // Handler for double-clicking on the canvas
   const handlePaneClick = useCallback(
@@ -73,7 +77,7 @@ const NodeEditor = () => {
 
   const nodeTypes = useMemo(() => {
     // Directly define NodeDataChange here if it has no external dependencies
-    const NodeDataChange = (nodeId, newData) => {
+    const handleNodeDataChange = (nodeId, newData) => {
       setNodes((prevNodes) =>
         prevNodes.map((node) =>
           node.id === nodeId
@@ -86,19 +90,43 @@ const NodeEditor = () => {
     return {
       UMLClassNode: (nodeProps) => (
         <UMLClassNode
-          {...nodeProps}
+          id={nodeProps.id}
+          data={nodeProps.data}
           onDelete={handleNodeDelete}
-          onNodeDataChange={NodeDataChange}
+          onNodeDataChange={handleNodeDataChange}
         />
       ),
     };
   }, []); // Empty dependency array if there are truly no dependencies
+
+  const onSave = useCallback(() => {
+    if (rfInstance) {
+      const flow = rfInstance.toObject();
+      localStorage.setItem(flowKey, JSON.stringify(flow));
+    }
+  }, [rfInstance]);
+
+  const onRestore = useCallback(() => {
+    const restoreFlow = async () => {
+      const flow = JSON.parse(localStorage.getItem(flowKey));
+
+      if (flow) {
+        const { x = 0, y = 0, zoom = 1 } = flow.viewport;
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+        setViewport({ x, y, zoom });
+      }
+    };
+
+    restoreFlow();
+  }, [setNodes, setViewport]);
 
   // Export function
   const exportNodesToJson = useCallback(() => {
     const exportData = rfInstance.toObject();
     const fileName = "reactflow_export.json";
     const jsonStr = JSON.stringify(exportData, null, 2); // Pretty print the JSON
+    localStorage.setItem(flowKey, jsonStr);
     const element = document.createElement("a");
     element.setAttribute(
       "href",
@@ -198,6 +226,18 @@ const NodeEditor = () => {
           onClick={handlePaneClick}
         >
           New Node
+        </button>
+        <button
+          className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
+          onClick={onRestore}
+        >
+          restore
+        </button>
+        <button
+          className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
+          onClick={onSave}
+        >
+          save
         </button>
       </div>
     </div>

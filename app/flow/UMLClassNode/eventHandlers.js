@@ -38,7 +38,7 @@ export function eventHandlers(params) {
       let updatedData = {};
 
       if (type === "name") {
-        updatedData = { ...prevData, name: value };
+        updatedData = { ...prevData, name: value}; //
       } else {
         updatedData = {
           ...prevData,
@@ -56,7 +56,7 @@ export function eventHandlers(params) {
     });
   };
 
-  const saveChanges = (type, index = null) => {
+  const handleBlur = (type, index = null) => {
     setEditState((prevState) => {
       if (type === "name") {
         // If 'name' is being edited, simply set its edit state to false
@@ -92,7 +92,7 @@ export function eventHandlers(params) {
   return {
     handleRightClick,
     handleChange,
-    saveChanges,
+    handleBlur,
     toggleEditState,
     deleteNode,
   };

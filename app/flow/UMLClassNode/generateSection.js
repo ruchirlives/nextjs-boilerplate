@@ -10,7 +10,7 @@ export function generateSection(
   setEditableData, // Added: setter function for editableData
   setEditState, // Added: setter function for editState
   handleChange,
-  saveChanges,
+  handleBlur,
   toggleEditState,
 ) {
   const addItem = (type, e) => {
@@ -25,7 +25,7 @@ export function generateSection(
     });
   };
   return (
-    <div>
+    <div key={sectionKey}>
       <strong>
         {sectionKey.charAt(0).toUpperCase() + sectionKey.slice(1)}
       </strong>
@@ -36,7 +36,7 @@ export function generateSection(
               key={index}
               type="text"
               value={item}
-              onBlur={() => saveChanges(sectionKey, index)}
+              onBlur={() => handleBlur(sectionKey, index)}
               onChange={(e) => handleChange(sectionKey, e, index)}
               autoFocus={item === ""}
               className="editInput nodrag"

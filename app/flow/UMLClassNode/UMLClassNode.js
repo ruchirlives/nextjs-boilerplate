@@ -33,6 +33,7 @@ const UMLClassNode = ({ id, data, onDelete, onNodeDataChange}) => {
     ) // Assuming you want to track edit state for 'name' as well
   );
 
+
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
@@ -45,22 +46,18 @@ const UMLClassNode = ({ id, data, onDelete, onNodeDataChange}) => {
   const {
     handleRightClick,
     handleChange,
-    saveChanges,
+    handleBlur,
     toggleEditState,
     deleteNode,
-
   } = eventHandlers({
     setEditState,
     setEditableData,
-    editableData,
-    editState,
     setMenuPosition,
     setMenuVisible,
     onDelete,
     onNodeDataChange,
-    id
-  }
-  );
+    id,
+  });
 
   return (
     <div className="umlClassNode" onContextMenu={handleRightClick}>
@@ -71,7 +68,7 @@ const UMLClassNode = ({ id, data, onDelete, onNodeDataChange}) => {
         editState,
         editableData,
         handleChange,
-        saveChanges,
+        handleBlur,
         toggleEditState,
         longPressProps
       )}
@@ -84,8 +81,8 @@ const UMLClassNode = ({ id, data, onDelete, onNodeDataChange}) => {
           setEditableData,
           setEditState,
           handleChange,
-          saveChanges,
-          toggleEditState,
+          handleBlur,
+          toggleEditState
         )
       )}
 
