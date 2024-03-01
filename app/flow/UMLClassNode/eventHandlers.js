@@ -1,3 +1,5 @@
+import { useEffect} from "react";
+
 export function eventHandlers(params) {
   const {
     setEditState,
@@ -5,7 +7,6 @@ export function eventHandlers(params) {
     setMenuPosition,
     setMenuVisible,
     onDelete,
-    onNodeDataChange,
     id,
   } = params;
 
@@ -38,7 +39,7 @@ export function eventHandlers(params) {
       let updatedData = {};
 
       if (type === "name") {
-        updatedData = { ...prevData, name: value}; //
+        updatedData = { ...prevData, name: value }; //
       } else {
         updatedData = {
           ...prevData,
@@ -47,10 +48,6 @@ export function eventHandlers(params) {
           ),
         };
       }
-
-      // Here, call onNodeDataChange with the node's ID and the updated data
-      // This assumes that onNodeDataChange expects the node's ID and the new data object
-      onNodeDataChange(id, updatedData);
 
       return updatedData;
     });

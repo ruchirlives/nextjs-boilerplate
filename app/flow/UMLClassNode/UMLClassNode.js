@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Handle, Position } from "reactflow";
 import "./UMLClassNode.css";
 import { ContextMenu } from "./ContextMenu";
@@ -7,7 +7,7 @@ import { generateSection } from "./generateSection";
 import { eventHandlers } from "./eventHandlers";
 import useLongPress from "./useLongPress";
 
-const UMLClassNode = ({ id, data, onDelete, onNodeDataChange}) => {
+const UMLClassNode = ({ id, data, onDelete, onNodeDataChange }) => {
   // Dynamically determine sections excluding 'name'
   const sections = Object.keys(data).filter((key) => key !== "name");
 
@@ -33,6 +33,10 @@ const UMLClassNode = ({ id, data, onDelete, onNodeDataChange}) => {
     ) // Assuming you want to track edit state for 'name' as well
   );
 
+  useEffect(() => {
+    // Assuming id is stable or comes from a context/state that doesn't change often
+    onNodeDataChange(id, editableData);
+  }, [editableData, id, onNodeDataChange]); // Ensure onNodeDataChange is stable or wrapped in useCallback if defined in this component
 
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
@@ -55,7 +59,6 @@ const UMLClassNode = ({ id, data, onDelete, onNodeDataChange}) => {
     setMenuPosition,
     setMenuVisible,
     onDelete,
-    onNodeDataChange,
     id,
   });
 
