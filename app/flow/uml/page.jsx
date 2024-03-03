@@ -9,9 +9,9 @@ function ControlPanel(props) {
   return (
     <button
       className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
-      onClick={(event) => createNodes(event, ["attributes", "methods"])}
+      onClick={(event) => createNodes(event, "Class", ["attributes", "methods"])}
     >
-      New Node
+      New Class
     </button>
   );
 }

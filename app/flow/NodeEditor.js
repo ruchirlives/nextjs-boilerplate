@@ -55,7 +55,7 @@ const NodeEditor = (props) => {
 
   // Handler for double-clicking on the canvas
   const createNodes = useCallback(
-    (event, sections) => {
+    (event, title, sections) => {
       event.preventDefault();
       const reactFlowBounds = event.currentTarget.getBoundingClientRect();
       const position = {
@@ -69,7 +69,7 @@ const NodeEditor = (props) => {
         type: "UMLClassNode", // Make sure this type matches your custom node type
         position: position, // Using calculated position
         data: {
-          name: "New Class",
+          name: title,
           ...sections.reduce((acc, section) => {
             acc[section] = [];
             return acc;
