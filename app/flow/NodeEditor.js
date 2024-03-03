@@ -67,7 +67,7 @@ const NodeEditor = () => {
         id: `UMLClassNode_${Date.now()}`,
         type: "UMLClassNode", // Make sure this type matches your custom node type
         position: position, // Using calculated position
-        data: { name: "New Class", attributes: [], methods: [] },
+        data: { name: "New Class", attributes: [], methods: [], policies: []},
       };
 
       setNodes((prevNodes) => prevNodes.concat(newNode));
