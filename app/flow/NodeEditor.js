@@ -26,7 +26,8 @@ const initialEdges = [
   // Define edges (connections) between nodes here
 ];
 
-const NodeEditor = () => {
+const NodeEditor = (props) => {
+  const { ControlPanel } = props;
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const { x, y, zoom } = useViewport();
@@ -53,8 +54,8 @@ const NodeEditor = () => {
   }, []);
 
   // Handler for double-clicking on the canvas
-  const handlePaneClick = useCallback(
-    (event) => {
+  const createNodes = useCallback(
+    (event, sections) => {
       event.preventDefault();
       const reactFlowBounds = event.currentTarget.getBoundingClientRect();
       const position = {
@@ -67,7 +68,13 @@ const NodeEditor = () => {
         id: `UMLClassNode_${Date.now()}`,
         type: "UMLClassNode", // Make sure this type matches your custom node type
         position: position, // Using calculated position
-        data: { name: "New Class", attributes: [], methods: [], policies: []},
+        data: {
+          name: "New Class",
+          ...sections.reduce((acc, section) => {
+            acc[section] = [];
+            return acc;
+          }, {}),
+        },
       };
 
       setNodes((prevNodes) => prevNodes.concat(newNode));
@@ -185,7 +192,6 @@ const NodeEditor = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        onPaneContextMenu={handlePaneClick}
         nodeTypes={nodeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
         onInit={setRfInstance}
@@ -221,12 +227,7 @@ const NodeEditor = () => {
         >
           Export All Nodes to JSON
         </button>
-        <button
-          className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
-          onClick={handlePaneClick}
-        >
-          New Node
-        </button>
+
         <button
           className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
           onClick={onRestore}
@@ -239,6 +240,7 @@ const NodeEditor = () => {
         >
           save
         </button>
+        <ControlPanel createNodes={createNodes}></ControlPanel>
       </div>
     </div>
   );
