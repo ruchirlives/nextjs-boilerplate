@@ -97,7 +97,7 @@ const NodeEditor = () => {
         />
       ),
     };
-  }, []); // Empty dependency array if there are truly no dependencies
+  }, [handleNodeDelete]); // Empty dependency array if there are truly no dependencies
 
   const onSave = useCallback(() => {
     if (rfInstance) {
