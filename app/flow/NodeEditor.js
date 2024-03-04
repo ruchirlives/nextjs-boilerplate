@@ -1,4 +1,6 @@
 import React, { useMemo, useState, useCallback } from "react";
+import Dagre from "@dagrejs/dagre";
+
 import ReactFlow, {
   Background,
   BackgroundVariant,
@@ -13,6 +15,25 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import UMLClassNode from "./UMLClassNode/UMLClassNode";
 import { initialNodes } from "./initialNodes";
+
+const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
+const getLayoutedElements = (nodes, edges, options) => {
+  g.setGraph({ rankdir: options.direction });
+
+  edges.forEach((edge) => g.setEdge(edge.source, edge.target));
+  nodes.forEach((node) => g.setNode(node.id, node));
+
+  Dagre.layout(g);
+
+  return {
+    nodes: nodes.map((node) => {
+      const { x, y } = g.node(node.id);
+
+      return { ...node, position: { x, y } };
+    }),
+    edges,
+  };
+};
 
 const flowKey = "MyFlow";
 
@@ -46,7 +67,15 @@ const NodeEditor = (props) => {
     (connection) => setEdges((eds) => addEdge(connection, edges)),
     [edges]
   );
+  const onLayout = useCallback(
+    (direction) => {
+      const layouted = getLayoutedElements(nodes, edges, { direction });
 
+      setNodes([...layouted.nodes]);
+      setEdges([...layouted.edges]);
+    },
+    [nodes, edges]
+  );
   const handleNodeDelete = useCallback((nodeId) => {
     setNodes((currentNodes) =>
       currentNodes.filter((node) => node.id !== nodeId)
@@ -239,6 +268,18 @@ const NodeEditor = (props) => {
           onClick={onSave}
         >
           save
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded"
+          onClick={() => onLayout("TB")}
+        >
+          vertical layout
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded"
+          onClick={() => onLayout("LR")}
+        >
+          horizontal layout
         </button>
         <ControlPanel createNodes={createNodes}></ControlPanel>
       </div>
