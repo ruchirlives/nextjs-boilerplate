@@ -8,7 +8,7 @@ function ControlPanel(props) {
   const { createNodes } = props;
   
   // Define a base class name for all buttons
-  const buttonBaseClass = "bg-green-800 hover:bg-green-600 text-white font-medium py-2 px-4 rounded text-sm";
+  const buttonBaseClass = ""// "bg-green-800 hover:bg-green-600 text-white font-medium py-2 px-4 rounded text-sm";
 
   
   return (
