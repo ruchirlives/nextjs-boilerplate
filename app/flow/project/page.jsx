@@ -35,10 +35,18 @@ function ControlPanel(props) {
       <button
         className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
         onClick={(event) =>
-          createNodes(event, "policies", ["attributes", "supports"])
+          createNodes(event, "policies", ["attributes"])
         }
       >
         New Policy
+      </button>
+     <button
+        className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
+        onClick={(event) =>
+          createNodes(event, "supports", ["attributes"])
+        }
+      >
+        New Support
       </button>
       <button
         className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
