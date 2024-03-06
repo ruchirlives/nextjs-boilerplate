@@ -11,7 +11,7 @@ function ControlPanel(props) {
       <button
         className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
         onClick={(event) =>
-          createNodes(event, "Project", ["attributes", "directcosts", "staffing", "policies", "milestones", "reports"])
+          createNodes(event, "projects", ["attributes", "milestones", "reports"])
         }
       >
         New Project
@@ -19,7 +19,7 @@ function ControlPanel(props) {
       <button
         className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
         onClick={(event) =>
-          createNodes(event, "DirectCost", ["attributes"])
+          createNodes(event, "directcosts", ["attributes"])
         }
       >
         New DirectCost
@@ -27,7 +27,7 @@ function ControlPanel(props) {
       <button
         className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
         onClick={(event) =>
-          createNodes(event, "Staff", ["attributes"])
+          createNodes(event, "staffing", ["attributes"])
         }
       >
         New Staff
@@ -35,7 +35,7 @@ function ControlPanel(props) {
       <button
         className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
         onClick={(event) =>
-          createNodes(event, "Policy", ["attributes", "supports"])
+          createNodes(event, "policies", ["attributes", "supports"])
         }
       >
         New Policy
@@ -43,7 +43,7 @@ function ControlPanel(props) {
       <button
         className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
         onClick={(event) =>
-          createNodes(event, "Milestone", ["attributes", "objectives"])
+          createNodes(event, "milestones", ["attributes", "objectives"])
         }
       >
         New Milestone
