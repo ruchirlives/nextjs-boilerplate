@@ -6,10 +6,14 @@ import NodeEditor from "../NodeEditor";
 
 function ControlPanel(props) {
   const { createNodes } = props;
+  
+  // Define a base class name for all buttons
+  const buttonBaseClass = "bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded";
+
   return (
     <>
       <button
-        className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
+        className={buttonBaseClass}
         onClick={(event) =>
           createNodes(event, "projects", ["attributes", "milestones", "reports"])
         }
@@ -17,7 +21,7 @@ function ControlPanel(props) {
         New Project
       </button>
       <button
-        className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
+        className={buttonBaseClass}
         onClick={(event) =>
           createNodes(event, "directcosts", ["attributes"])
         }
@@ -25,7 +29,7 @@ function ControlPanel(props) {
         New DirectCost
       </button>
       <button
-        className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
+        className={buttonBaseClass}
         onClick={(event) =>
           createNodes(event, "staffing", ["attributes"])
         }
@@ -33,15 +37,15 @@ function ControlPanel(props) {
         New Staff
       </button>
       <button
-        className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
+        className={buttonBaseClass}
         onClick={(event) =>
           createNodes(event, "policies", ["attributes"])
         }
       >
         New Policy
       </button>
-     <button
-        className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
+      <button
+        className={buttonBaseClass}
         onClick={(event) =>
           createNodes(event, "supports", ["attributes"])
         }
@@ -49,7 +53,7 @@ function ControlPanel(props) {
         New Support
       </button>
       <button
-        className="bg-green-900 hover:bg-green-700 text-white font-bold py-3 px-6 rounded"
+        className={buttonBaseClass}
         onClick={(event) =>
           createNodes(event, "milestones", ["attributes", "objectives"])
         }
